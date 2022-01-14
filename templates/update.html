@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block title %} Update {% endblock title %} {% block
+body %}
+<div class="container-fluid">
+  <form action="/update/{{allCiphers.sno}}" method="POST">
+    <div class="mb-3">
+      <label for="title" class="form-label">TODO:Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        name="title"
+        value="{{allCiphers.title}}"
+        aria-describedby="emailHelp"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="desc" class="form-label">TODO:Description</label>
+      <input type="text" class="form-control" id="desc" name="desc" value="{{allCiphers.desc}}"/>
+    </div>
+
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>
+
+{% endblock body %}
