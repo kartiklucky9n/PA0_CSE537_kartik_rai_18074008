@@ -15,50 +15,51 @@ class Cipher(db.Model):
     def __repr__(self) -> str:
         return f"{self.sno} - {self.title}"
 
+def encyptKey(myString):
+    my=list(myString)
+    b=[]
+    for i in range(0,len(myString)):
+        c=ord(my[i])
+        print(chr(95+26-(c-95)))
+        b.append(chr(95+26-(c-95)))
+    b="".join(b)
+    return b
 @app.route('/', methods = ['GET', 'POST'])
 def hello_world():
     '''
     cipher = Cipher(title = "code", desc="now")
     db.session.add(cipher)
     db.session.commit()
-    '''
+    
     if request.method=='POST':
         title = request.form['title']
         desc = request.form['desc']
         title  = Cipher(title = title, desc = desc)
         db.session.add(title)
         db.session.commit()
-
-    allCiphers = Cipher.query.all()
-
-    return render_template("home.html", allCiphers=allCiphers)
-
-@app.route('/update/<int:sno>', methods=['GET', 'POST'])
-def update(sno):
-    if(request.method=="POST"):
-        title = request.form['title']
-        desc = request.form['desc']
-        allCiphers = Cipher.query.filter_by(sno=sno).first()
-        allCiphers.title = title
-        allCiphers.desc = desc
-        db.session.add(allCiphers)
-        db.session.commit()
-        return redirect("/")
-        
-    allCiphers = Cipher.query.filter_by(sno=sno).first()
-    return render_template("update.html", allCiphers=allCiphers)
-
-@app.route('/delete/<int:sno>')
-def delete(sno):
-    allCiphers = Cipher.query.get(sno)
-    db.session.delete(allCiphers)
-    db.session.commit()
-    return redirect("/")
     
-@app.route("/show")
-def crpyto():
     allCiphers = Cipher.query.all()
-    print(allCiphers)
-    return "chal gaya"
+    '''
+    myCipher = Cipher(title="Text to encrypt", desc="Text to decrypt")
+    return render_template("home.html", myCipher = myCipher)
+
+@app.route('/encipher', methods=['GET', 'POST'])
+def encipher():
+    if(request.method=="POST"):
+        text = request.form['text1']
+        etext = encyptKey(text)
+        myCipher = Cipher(title=text, desc = etext)
+        return render_template("home.html", myCipher = myCipher)
+    return redirect("/")
+
+@app.route('/decipher', methods=['GET', 'POST'])
+def decipher():
+    if(request.method=="POST"):
+        etext = request.form['text2']
+        text = encyptKey(etext)
+        myCipher = Cipher(title=text, desc = etext)
+        return render_template("home.html", myCipher = myCipher)
+    return redirect("/")
+
 if __name__ == "__main__":
     app.run(debug=True)
