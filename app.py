@@ -40,8 +40,9 @@ def hello_world():
     
     allCiphers = Cipher.query.all()
     '''
-    myCipher = Cipher(title="Text to encrypt", desc="Text to decrypt")
-    return render_template("home.html", myCipher = myCipher)
+    i=-1
+    
+    return render_template("home.html",  i=i)
 
 @app.route('/encipher', methods=['GET', 'POST'])
 def encipher():
@@ -49,7 +50,8 @@ def encipher():
         text = request.form['text1']
         etext = encyptKey(text)
         myCipher = Cipher(title=text, desc = etext)
-        return render_template("home.html", myCipher = myCipher)
+        i=1
+        return render_template("home.html", myCipher = myCipher, i=i)
     return redirect("/")
 
 @app.route('/decipher', methods=['GET', 'POST'])
@@ -58,7 +60,8 @@ def decipher():
         etext = request.form['text2']
         text = encyptKey(etext)
         myCipher = Cipher(title=text, desc = etext)
-        return render_template("home.html", myCipher = myCipher)
+        i=0
+        return render_template("home.html", myCipher = myCipher, i=0)
     return redirect("/")
 
 if __name__ == "__main__":

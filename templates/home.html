@@ -4,51 +4,60 @@ body %}
 <div class="container-fluid">
   <form action="/" method="POST">
     <div class="row justify-content-around">
-      <div
-        class="col-4 alert alert-info"
-        style="text-align: center"
-        role="alert"
-      >
-        Original Text
+      <div class="col-6 alert alert-primary shadow-sm p-3 mb-3 bg-white rounded" style="text-align: center" role="alert">
+          Original Text
+        
       </div>
-      <div
-        class="col-4 alert alert-info"
-        style="text-align: center"
-        role="alert"
-      >
-        Cipher Text
+      <div class="col-6 alert alert-dark shadow-sm p-3 mb-3 bg-white rounded" style="text-align: center" role="alert">
+          Cipher Text
+        
       </div>
-    </div>
-    <div class="row justify-content-around align-items-center">
-      <div class="col-md-auto shadow-sm bg-body rounded">
-        <textarea
+    
+      <div class="col-6 shadow p-3 mb-3 bg-white rounded d-flex justify-content-center">
+        {% if i==-1 or i==1 %}
+        <input
+          type="text"
           name="text1"
-          cols="50"
-          rows="10"
           class="inputText"
           id="inputText1"
-          onfocus="this.value=''; this.onfocus=null;"
+          placeholder="Text to encrypt"
+          style="text-align: center"
           spellcheck="false"
-        >
-        {{myCipher.title}}
-        </textarea>
+        />
+        {% else %}
+        <input
+          type="text"
+          name="text1"
+          class="inputText"
+          id="inputText1"
+          value="{{myCipher.title}}"
+          spellcheck="false"
+        />
+        {% endif %}
       </div>
-      <div class="col-md-auto shadow-sm bg-body rounded">
-        <textarea
+      <div class="col-6 shadow p-3 mb-3 bg-white rounded d-flex justify-content-center">
+        {% if i==0 or i==-1 %}
+        <input
+          type="text"
           name="text2"
-          cols="50"
-          rows="10"
           class="inputText"
           id="inputText2"
-          onfocus="this.value=''; this.onfocus=null;"
-          spellcheck="false"
-        >
-        {{myCipher.desc}}
-        </textarea>
+          placeholder="Text to decrypt"
+          style="text-align: center"
+        />
+        {% else %}
+        <input
+          type="text"
+          name="text2"
+          class="inputText"
+          id="inputText2"
+          value="{{myCipher.desc}}"
+        />
+        {% endif %}
       </div>
-    </div>
-    <div class="row justify-content-around my-2 align-items-center">
-      <div class="col-md-auto">
+    
+
+      <div class="col-6 d-flex justify-content-center">
         <button
           type="submit"
           formaction="\encipher"
@@ -57,7 +66,7 @@ body %}
           Encipher
         </button>
       </div>
-      <div class="col-md-auto">
+      <div class="col-6 d-flex justify-content-center">
         <button
           type="submit"
           formaction="\decipher"
