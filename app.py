@@ -7,6 +7,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+#Model for storing data (on requirement)
 class Cipher(db.Model):
     sno = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
@@ -15,6 +16,7 @@ class Cipher(db.Model):
     def __repr__(self) -> str:
         return f"{self.sno} - {self.title}"
 
+#Encyption key, used both for encryption and decryption
 def encyptKey(myString):
     my=list(myString)
     b=[]
@@ -24,26 +26,15 @@ def encyptKey(myString):
         b.append(chr(95+26-(c-95)))
     b="".join(b)
     return b
+
 @app.route('/', methods = ['GET', 'POST'])
 def hello_world():
-    '''
-    cipher = Cipher(title = "code", desc="now")
-    db.session.add(cipher)
-    db.session.commit()
-    
-    if request.method=='POST':
-        title = request.form['title']
-        desc = request.form['desc']
-        title  = Cipher(title = title, desc = desc)
-        db.session.add(title)
-        db.session.commit()
-    
-    allCiphers = Cipher.query.all()
-    '''
-    i=-1
-    
+   
+    #variable i for making decision and input for encipher and decipher
+    i=-1 
     return render_template("home.html",  i=i)
 
+#Encrpt the input text
 @app.route('/encipher', methods=['GET', 'POST'])
 def encipher():
     if(request.method=="POST"):
@@ -54,6 +45,7 @@ def encipher():
         return render_template("home.html", myCipher = myCipher, i=i)
     return redirect("/")
 
+#Decrypt the input text
 @app.route('/decipher', methods=['GET', 'POST'])
 def decipher():
     if(request.method=="POST"):
